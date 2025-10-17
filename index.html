@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Wellness AI</title>
+  <meta name="description" content="Holistic wellness tracker with food, hydration, mood, wellness, workouts, and AI-style advice.">
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="logo">💪</div>
+      <h1>Wellness AI</h1>
+    </div>
+    <nav class="tabs">
+      <button class="tab active" data-tab="food">Food</button>
+      <button class="tab" data-tab="hydrate">Hydration & Mood</button>
+      <button class="tab" data-tab="wellness">Wellness</button>
+      <button class="tab" data-tab="workouts">Workouts</button>
+      <button class="tab" data-tab="advice">AI Advice</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- FOOD -->
+    <section id="food" class="panel show">
+      <div class="card">
+        <h2>Search foods</h2>
+        <div class="row">
+          <input id="foodSearch" placeholder="Search foods (e.g., apple, rice, chicken)…" />
+          <button id="tryAddFromSearch" class="ghost">Quick add from text</button>
+        </div>
+        <div id="foodMeta" class="muted small"></div>
+        <div id="foodResults" class="list"></div>
+      </div>
+
+      <div class="card">
+        <h2>Log a meal</h2>
+        <div id="selectedFood" class="pill pill-muted">No food selected</div>
+        <div class="row">
+          <label>Meal</label>
+          <select id="mealType">
+            <option>Breakfast</option><option>Lunch</option><option>Dinner</option><option>Snacks</option>
+          </select>
+          <label>Amount (grams)</label>
+          <input id="grams" type="number" min="1" value="100" />
+          <button id="addFood">Add</button>
+        </div>
+        <div class="muted small">Tip: Click a result above to select, or use “Quick add from text.”</div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="flex-between">
+            <h3>Today’s Log</h3>
+            <button id="clearToday" class="ghost">Clear</button>
+          </div>
+          <div id="mealLog"></div>
+        </div>
+        <div class="card">
+          <h3>Totals</h3>
+          <div id="totals" class="totals"></div>
+          <canvas id="calChart" height="220" aria-label="Weekly calories chart"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <!-- HYDRATION & MOOD -->
+    <section id="hydrate" class="panel">
+      <div class="card">
+        <h2>Hydration & Mood</h2>
+        <div class="row gap">
+          <button class="chip" data-water="250">+250 ml</button>
+          <button class="chip" data-water="500">+500 ml</button>
+          <button class="chip" data-water="750">+750 ml</button>
+        </div>
+        <div class="row">
+          <label>Custom (ml)</label>
+          <input id="waterMl" type="number" min="0" />
+          <button id="addWater">Add water</button>
+        </div>
+        <div class="row">
+          <label>Mood</label>
+          <select id="moodSel" aria-label="Select mood">
+            <option>😊 Happy</option><option>😐 Neutral</option><option>😔 Sad</option><option>😩 Stressed</option>
+          </select>
+          <button id="saveMood">Save mood</button>
+        </div>
+
+        <div class="muted">Today’s water: <span id="todayWater">0</span> ml • Mood: <span id="todayMood">😐 Neutral</span></div>
+
+        <h3>Water entries</h3>
+        <div id="waterList" class="list small"></div>
+        <div class="row">
+          <button id="deleteLastWater" class="ghost">Delete last entry</button>
+          <button id="clearWater" class="ghost">Clear all</button>
+        </div>
+
+        <div class="chartInfo muted">
+          <strong>Chart axes:</strong> X-axis shows the last 7 calendar days. Y-axis shows total water intake (ml) per day.
+        </div>
+        <canvas id="waterChart" height="220" aria-label="Weekly water chart"></canvas>
+      </div>
+    </section>
+
+    <!-- WELLNESS -->
+    <section id="wellness" class="panel">
+      <div class="card">
+        <h2>Wellness</h2>
+        <div class="row">
+          <label>Sleep (h)</label><input id="sleepH" type="number" min="0" max="24" />
+          <label>Stress (1–5)</label><input id="stress" type="number" min="1" max="5" />
+          <label>Energy (1–5)</label><input id="energy" type="number" min="1" max="5" />
+        </div>
+        <textarea id="notes" placeholder="Notes / symptoms (optional)"></textarea>
+        <div class="row">
+          <button id="saveWellness">Save wellness</button>
+          <button id="addDemoDay" class="ghost">Add history (sample)</button>
+        </div>
+        <div id="wellnessList"></div>
+      </div>
+    </section>
+
+    <!-- WORKOUTS -->
+    <section id="workouts" class="panel">
+      <div class="card">
+        <h2>Workouts</h2>
+        <div class="row">
+          <input id="exName" placeholder="Exercise (e.g., Push-ups, Squats, Plank)" />
+          <input id="exSets" type="number" min="0" placeholder="Sets" />
+          <input id="exReps" type="number" min="0" placeholder="Reps" />
+          <input id="exMins" type="number" min="0" placeholder="Minutes" />
+          <button id="addExercise">Add to log</button>
+        </div>
+        <div class="muted small">Leave reps blank for timed exercises, or minutes blank for reps-based.</div>
+
+        <h3>Today’s Workout</h3>
+        <div id="workoutLog" class="list"></div>
+        <button id="clearWorkout" class="ghost">Clear workout</button>
+
+        <h3>Quick Plans</h3>
+        <div class="row">
+          <button class="chip plan-add" data-plan="Beginner Full-body">Beginner Full-body</button>
+          <button class="chip plan-add" data-plan="Core Booster">Core Booster</button>
+          <button class="chip plan-add" data-plan="Cardio Intervals">Cardio Intervals</button>
+        </div>
+        <div id="planList" class="list"></div>
+      </div>
+    </section>
+
+    <!-- AI ADVICE (MOCK) -->
+    <section id="advice" class="panel">
+      <div class="card">
+        <h2>AI Advice</h2>
+        <p class="muted">Generates varied, realistic suggestions (no key required).</p>
+        <div class="row">
+          <label>Goal</label>
+          <select id="goal"><option>lose</option><option>maintain</option><option>gain</option></select>
+          <label>Activity</label>
+          <select id="activity"><option>low</option><option>moderate</option><option>high</option></select>
+          <label>Fitness</label>
+          <select id="fitness"><option>beginner</option><option>intermediate</option><option>advanced</option></select>
+        </div>
+        <div class="row">
+          <button id="genAdvice">Generate advice</button>
+          <button id="genAdvice2" class="ghost">Generate another</button>
+        </div>
+        <div id="adviceCards" class="grid-2"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="muted center">
+    Data stays in your browser (localStorage).
+  </footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
