@@ -1,0 +1,37 @@
+:root{
+  --bg:#f7fafc; --card:#ffffff; --ink:#0f172a; --muted:#5b7089; --accent:#22c55e; --accent-ink:#052e14; --line:#e6edf5;
+  --ok:#16a34a; --warn:#f59e0b; --bad:#ef4444;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+.app-header{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.85);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);padding:10px 16px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:36px;height:36px;display:grid;place-items:center;background:#e9fbf0;border:1px solid var(--line);border-radius:10px}
+h1{font-size:20px;margin:0}
+.tabs{display:flex;gap:8px}
+.tab{padding:8px 12px;border:1px solid var(--line);background:#fff;color:var(--ink);border-radius:12px;cursor:pointer}
+.tab.active{background:var(--accent);color:#fff;border-color:transparent}
+
+main{max-width:1100px;margin:0 auto;padding:16px}
+.panel{display:none}.panel.show{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:12px 0;
+  box-shadow:0 6px 20px rgba(0,0,0,.05)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:900px){.grid-2{grid-template-columns:1fr}}
+input,select,textarea,button{padding:10px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--ink)}
+textarea{width:100%;min-height:90px}
+button{cursor:pointer}
+button.ghost{background:#fff;color:var(--muted)}
+button.chip{background:#f0fdf4;color:#14532d;border-color:#c7f0d7}
+button:hover{filter:brightness(1.03)}
+.list .item{padding:10px;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:8px}
+.muted{color:var(--muted)} .center{text-align:center} .small{font-size:12px}
+.pill{display:inline-block;padding:6px 10px;border-radius:999px;border:1px solid var(--line)}
+.pill-muted{background:#f6f8fb;color:#5b7089}
+.flex-between{display:flex;align-items:center;justify-content:space-between}
+.totals{display:grid;gap:6px}
+.totals .good{color:var(--ok)} .warn{color:var(--warn)} .bad{color:var(--bad)}
+.badge-del{border:none;background:#fee2e2;color:#7f1d1d;border-radius:8px;padding:4px 8px;cursor:pointer}
